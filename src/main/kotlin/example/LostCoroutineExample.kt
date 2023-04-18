@@ -12,7 +12,7 @@ fun main() {
     val scope = CoroutineScope(Dispatchers.Default)
 
     val job = scope.launch {
-        val file = download(networkService)
+        val file = downloadWithLostErrorState(networkService)
         println("file=$file")
     }
     runBlocking {
@@ -23,7 +23,7 @@ fun main() {
 /**
  * We can lose the coroutine if we don't call the [continuation.resume] method.
  */
-suspend fun download(networkService: NetworkService): File {
+suspend fun downloadWithLostErrorState(networkService: NetworkService): File {
     return suspendCoroutine { continuation ->
         networkService.getFile(object : CallbackFile {
             override fun onSuccess(result: File) {

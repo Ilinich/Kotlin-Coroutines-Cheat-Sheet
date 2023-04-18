@@ -29,6 +29,10 @@ fun main() {
 
                 /**
                  * As you can see User is available in each coroutines
+                 *
+                 * Further, we can get our custom object from context in each coroutine,
+                 * since for each new coroutine a newContext is created based on the parentContext,
+                 * and new fields overwrite the current ones if they already exist.
                  */
                 val value = coroutineContext[UserDataCoroutineContextElement]
                 println("user name=: ${value?.name}")

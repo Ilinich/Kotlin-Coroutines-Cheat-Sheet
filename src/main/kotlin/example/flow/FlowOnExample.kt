@@ -1,8 +1,11 @@
 package example.flow
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 fun main() {
     runBlocking {
@@ -19,7 +22,7 @@ fun main() {
                     .onEach {
                         doAction()
                     }
-                    .flowOn(Dispatchers.IO)
+                    .flowOn(Executors.newSingleThreadExecutor().asCoroutineDispatcher())
             }
             .flowOn(Dispatchers.IO)
             .collect {

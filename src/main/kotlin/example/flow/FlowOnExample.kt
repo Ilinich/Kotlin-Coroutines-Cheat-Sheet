@@ -16,10 +16,10 @@ fun main() {
             .flatMapMerge {
                 doAction()
                 flowOf(1)
-                    .flowOn(Dispatchers.IO)
                     .onEach {
                         doAction()
                     }
+                    .flowOn(Dispatchers.IO)
             }
             .flowOn(Dispatchers.IO)
             .collect {

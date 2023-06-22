@@ -18,26 +18,37 @@ import java.util.concurrent.Executors
  */
 fun main() {
     val scope = CoroutineScope(Job() + Dispatchers.Default)
-    val job = scope.launch {
+//    val job = scope.launch {
+//        println("launch 1 thread=: ${Thread.currentThread()}")
+//        launch(Dispatchers.Unconfined) {
+//            println("launch 2 thread=: ${Thread.currentThread()}")
+//
+//            launch(Dispatchers.IO) {
+//                println("launch 3 thread=: ${Thread.currentThread()}")
+//
+//                launch(Dispatchers.IO) {
+//                    println("launch 4.1 thread=: ${Thread.currentThread()}")
+//                }
+//
+//                launch(Dispatchers.Unconfined) {
+//                    println("launch 4.2 thread=: ${Thread.currentThread()}")
+//                    // suspend
+//                    // to do work
+//                }
+//            }
+//        }
+//    }
+
+    val job2 = scope.launch(Dispatchers.Default) {
         println("launch 1 thread=: ${Thread.currentThread()}")
         launch(Dispatchers.Unconfined) {
-            println("launch 2 thread=: ${Thread.currentThread()}")
-
-            launch(Dispatchers.IO) {
-                println("launch 3 thread=: ${Thread.currentThread()}")
-
-                launch(Dispatchers.IO) {
-                    println("launch 4.1 thread=: ${Thread.currentThread()}")
-                }
-
-                launch(Dispatchers.Unconfined) {
-                    println("launch 4.2 thread=: ${Thread.currentThread()}")
-                }
-            }
+            println("launch 2.2 thread=: ${Thread.currentThread()}")
+            delay(500)
+            println("launch 2.2 thread=: ${Thread.currentThread()}")
         }
     }
 
-    runBlocking { job.join() }
+    runBlocking { job2.join() }
 }
 
 //launch 1 thread=: Thread[DefaultDispatcher-worker-1,5,main]

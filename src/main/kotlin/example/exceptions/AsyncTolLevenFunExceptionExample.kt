@@ -29,7 +29,8 @@ fun main() {
     }
 
     runBlocking {
-        job.join() }
+        job.join()
+    }
 
     println("work finished")
 }

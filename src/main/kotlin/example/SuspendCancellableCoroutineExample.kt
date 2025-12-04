@@ -32,11 +32,15 @@ suspend fun downloadWithClearRes(networkService: NetworkService): File {
         }
         networkService.getFile(object : CallbackFile {
             override fun onSuccess(result: File) {
-                continuation.resume(result)
+                if (continuation.isActive) {
+                    continuation.resume(result)
+                }
             }
 
             override fun onFailure(error: Exception) {
-                continuation.resumeWithException(error)
+                if (continuation.isActive) {
+                    continuation.resumeWithException(error)
+                }
             }
         })
     }

@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
  */
 fun main() {
     val handler = CoroutineExceptionHandler { _, throwable ->
-        println(throwable)
+        println("Handler $throwable")
     }
     val scope = CoroutineScope(Dispatchers.Default)
 
@@ -43,6 +43,6 @@ fun main() {
     runBlocking { job.join() }
 }
 
-//java.lang.RuntimeException: RuntimeException in nested coroutine
+//Handler java.lang.RuntimeException: RuntimeException in nested coroutine
 //child coroutine 2
 //app top level coroutine finished

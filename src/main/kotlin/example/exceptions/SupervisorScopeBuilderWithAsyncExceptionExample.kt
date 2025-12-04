@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
  */
 fun main() {
     val handler = CoroutineExceptionHandler { _, throwable ->
-        println(throwable)
+        println("Handler $throwable")
     }
     val scope = CoroutineScope(Dispatchers.Default + handler)
 

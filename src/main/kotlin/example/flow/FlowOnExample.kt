@@ -1,12 +1,14 @@
 package example.flow
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+@OptIn(FlowPreview::class)
 fun main() {
     runBlocking {
         flowOf("Hey")
@@ -16,7 +18,7 @@ fun main() {
                 doAction()
             }
             .flowOn(Dispatchers.Default)
-            .flatMapMerge {
+            .flatMapMerge { length ->
                 doAction()
                 flowOf(1)
                     .onEach {

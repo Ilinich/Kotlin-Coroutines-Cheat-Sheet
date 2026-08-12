@@ -1,5 +1,7 @@
 package example.flow
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
@@ -20,7 +22,8 @@ fun main() {
             .onCompletion {
                 println("onCompletion")
             }
-            .collect {
+            .collectLatest {
+                delay(500)
                 println("$it")
             }
     }

@@ -11,16 +11,16 @@ import kotlinx.coroutines.*
 fun main() {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val handler = CoroutineExceptionHandler { _, throwable ->
-        println(throwable)
+        println("Handle $throwable")
     }
 
     val job = scope.launch {
         launch(handler) {
             launch {
-                delay(10)
+                delay(100)
                 throw Exception()
             }
-            delay(10)
+            delay(100)
             println("child1")
         }
     }
@@ -30,7 +30,7 @@ fun main() {
             launch {
                 throw Exception()
             }
-            delay(10)
+            delay(100)
             println("finished")
         }
     }

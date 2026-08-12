@@ -41,7 +41,7 @@ fun main() {
     }
 
     println("job isCancelled= ${job.isCancelled}")
-    println("job2 isCancelled= ${job.isCancelled}")
+    println("job2 isCancelled= ${job2.isCancelled}")
 }
 
 /**

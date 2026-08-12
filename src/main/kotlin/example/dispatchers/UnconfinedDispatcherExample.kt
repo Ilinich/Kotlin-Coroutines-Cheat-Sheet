@@ -32,12 +32,29 @@ fun main() {
 
                 launch(Dispatchers.Unconfined) {
                     println("launch 4.2 thread=: ${Thread.currentThread()}")
+                    // suspend
+                    // to do work
                 }
             }
         }
     }
 
     runBlocking { job.join() }
+
+    println()
+    println()
+    println()
+
+    val job2 = scope.launch(Dispatchers.Default) {
+        println("launch 1 thread=: ${Thread.currentThread()}")
+        launch(Dispatchers.Unconfined) {
+            println("launch 2.2 thread=: ${Thread.currentThread()}")
+            delay(500)
+            println("launch 2.2 thread=: ${Thread.currentThread()}")
+        }
+    }
+
+    runBlocking { job2.join() }
 }
 
 //launch 1 thread=: Thread[DefaultDispatcher-worker-1,5,main]

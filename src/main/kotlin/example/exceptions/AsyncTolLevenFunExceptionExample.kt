@@ -28,7 +28,9 @@ fun main() {
         throw RuntimeException("RuntimeException in async coroutine")
     }
 
-    runBlocking { job.join() }
+    runBlocking {
+        job.join()
+    }
 
     println("work finished")
 }

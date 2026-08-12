@@ -11,13 +11,32 @@ fun main() {
     val networkService = NetworkService()
     val scope = CoroutineScope(Dispatchers.Default)
 
-    val job = scope.launch {
-        val file = downloadWithClearRes(networkService)
-        println("file=$file")
-    }
-    runBlocking {
-        job.join()
-    }
+//    val job = scope.launch {
+//        val file = downloadWithClearRes(networkService)
+//        println("file=$file")
+//    }
+//    runBlocking {
+//        job.join()
+//    }
+
+
+    runBlocking { scope.launch {
+        launch {
+            delay(50)
+            println("analytics sent") // 2
+        }
+
+        coroutineScope {
+            launch {
+                delay(200)
+                println("avatars warmed") //3
+            }
+
+            println("skeleton shown") //1
+        }
+
+        println("ready shown") // 4
+    }.join() }
 }
 
 
@@ -32,11 +51,15 @@ suspend fun downloadWithClearRes(networkService: NetworkService): File {
         }
         networkService.getFile(object : CallbackFile {
             override fun onSuccess(result: File) {
-                continuation.resume(result)
+                if (continuation.isActive) {
+                    continuation.resume(result)
+                }
             }
 
             override fun onFailure(error: Exception) {
-                continuation.resumeWithException(error)
+                if (continuation.isActive) {
+                    continuation.resumeWithException(error)
+                }
             }
         })
     }

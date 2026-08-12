@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
  */
 fun main() {
     val handler = CoroutineExceptionHandler { _, throwable ->
-        println(throwable)
+        println("Handler $throwable")
     }
     val scope = CoroutineScope(Dispatchers.Default + handler)
 
@@ -22,41 +22,20 @@ fun main() {
      * Top-level coroutines behave differently than child coroutines when launched via launch() or async().
      * In addition, CoroutineExceptionHandlers can be set in top-level coroutines.
      */
-    val job = scope.launch {
+    val job = scope.async {
 
-        supervisorScope {
-
-            /**
-             * Since the coroutines in the supervisorScope are top-level coroutines,
-             * this means that async coroutines now wrap their exceptions in Deferred objects...
-             *
-             * And we will get an error only at the moment when we call await on Deferred.
-             */
-            val job1 = async {
-                delay(100)
-                throw RuntimeException("RuntimeException in nested coroutine")
-                println("child coroutine 1")
-            }
-
-            val job2 = async {
-                delay(500)
-                println("child coroutine 2")
-            }
-
-            try {
-                job1.await()
-            } catch (e: Throwable) {
-                println("catch job1 error=$e")
-            }
-
-            try {
-                job2.await()
-            } catch (e: Throwable) {
-                println("catch job2 error=$e")
-            }
-        }
+        delay(100)
+        throw RuntimeException("RuntimeException in nested coroutine")
 
         println("app top level coroutine finished")
+    }
+
+    runBlocking {
+        try {
+            job.await()
+        } catch (e: Throwable) {
+            println(e.message)
+        }
     }
 
     runBlocking { job.join() }

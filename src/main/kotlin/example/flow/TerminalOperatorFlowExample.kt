@@ -2,6 +2,7 @@ package example.flow
 
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
 
 /**

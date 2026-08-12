@@ -11,8 +11,9 @@ fun main() {
     val job = scope.launch {
         val items = withContext(Dispatchers.IO) {
             (1..15).map(concurrency = 5) { index ->
-                delay(Random.nextInt(10, 50).toLong())
-                println("got user with index=$index")
+                val del = Random.nextInt(10, 50).toLong()
+                delay(del)
+                println("got user with index=$index delay=$del")
                 "User id=$index"
             }
         }

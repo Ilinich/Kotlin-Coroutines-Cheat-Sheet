@@ -40,3 +40,11 @@ fun main() {
         job.join()
     }
 }
+
+suspend fun <T> awaitJobWithSelect(job: Deferred<T>): T {
+    return select<T> {
+        job.onAwait { result ->
+            result
+        }
+    }
+}

@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 fun main() {
     val scope = CoroutineScope(Dispatchers.Default)
     val handler = CoroutineExceptionHandler { _, throwable ->
-        println(throwable)
+        println("Handler $throwable")
     }
 
     val job = scope.launch {

@@ -10,7 +10,7 @@ fun main() {
     val scope = CoroutineScope(Dispatchers.Default)
 
     val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        println(throwable)
+        println("Handler $throwable")
     }
 
     val job = scope.launch(

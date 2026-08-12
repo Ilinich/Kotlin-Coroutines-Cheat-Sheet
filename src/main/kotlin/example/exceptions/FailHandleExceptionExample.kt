@@ -9,17 +9,18 @@ import kotlinx.coroutines.*
  * For CoroutineExceptionHandler to work, you need to set it either in CoroutineScope or in top-level coroutines.
  */
 fun main() {
-    val scope = CoroutineScope(Dispatchers.Default)
+    val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val handler = CoroutineExceptionHandler { _, throwable ->
-        println(throwable)
+        println("Handle $throwable")
     }
 
     val job = scope.launch {
         launch(handler) {
             launch {
+                delay(100)
                 throw Exception()
             }
-            delay(10)
+            delay(100)
             println("child1")
         }
     }
@@ -29,7 +30,7 @@ fun main() {
             launch {
                 throw Exception()
             }
-            delay(10)
+            delay(100)
             println("finished")
         }
     }

@@ -27,7 +27,7 @@ fun main() {
                 }
             }
         } catch (exception: Exception) {
-            println("Handle $exception in try/catch")
+            println("catch handle $exception in try/catch")
         }
     }
 
